@@ -29,12 +29,29 @@ import {
   AlertDisplay,
   OAuthRequestDialog,
   SignInPage,
+  SignInProviderConfig,
 } from '@backstage/core-components';
 import { createApp } from '@backstage/app-defaults';
 import { AppRouter, FlatRoutes } from '@backstage/core-app-api';
 import { CatalogGraphPage } from '@backstage/plugin-catalog-graph';
 import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
+import LightIcon from '@material-ui/icons/WbSunny';
+import DarkIcon from '@material-ui/icons/Brightness2';
+import { UnifiedThemeProvider } from '@backstage/theme';
+import { redTheme } from './theme/redTheme';
+import { blueTheme } from './theme/blueTheme';
+
+import { githubAuthApiRef } from '@backstage/core-plugin-api';
+import { ScaffolderFieldExtensions, ScaffolderLayouts } from '@backstage/plugin-scaffolder-react';
+import { TwoColumnLayout, ValidateKebabCaseFieldExtension } from './scaffolder';
+
+const githubProvider: SignInProviderConfig = {
+  id: 'github-auth-provider',
+  title: 'GitHub',
+  message: 'Sign in using GitHub',
+  apiRef: githubAuthApiRef,
+};
 
 const app = createApp({
   apis,
@@ -56,8 +73,30 @@ const app = createApp({
     });
   },
   components: {
-    SignInPage: props => <SignInPage {...props} auto providers={['guest']} />,
+    SignInPage: props => (
+      <SignInPage {...props} auto provider={githubProvider} />
+    ),
   },
+  themes: [
+    {
+      id: 'red-theme',
+      title: 'Red Theme',
+      variant: 'light',
+      icon: <LightIcon />,
+      Provider: ({ children }) => (
+        <UnifiedThemeProvider theme={redTheme} children={children} />
+      ),
+    },
+    {
+      id: 'blue-theme',
+      title: 'Blue Theme',
+      variant: 'dark',
+      icon: <DarkIcon />,
+      Provider: ({ children }) => (
+        <UnifiedThemeProvider theme={blueTheme} children={children} />
+      ),
+    },
+  ],
 });
 
 const routes = (
@@ -79,7 +118,14 @@ const routes = (
         <ReportIssue />
       </TechDocsAddons>
     </Route>
-    <Route path="/create" element={<ScaffolderPage />} />
+    <Route path="/create" element={<ScaffolderPage />} >
+      <ScaffolderFieldExtensions>
+        <ValidateKebabCaseFieldExtension />
+      </ScaffolderFieldExtensions>
+      <ScaffolderLayouts>
+        <TwoColumnLayout />
+      </ScaffolderLayouts>
+    </Route>
     <Route path="/api-docs" element={<ApiExplorerPage />} />
     <Route
       path="/catalog-import"

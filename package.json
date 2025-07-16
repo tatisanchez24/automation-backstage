@@ -6,7 +6,7 @@
     "node": "20 || 22"
   },
   "scripts": {
-    "start": "backstage-cli repo start",
+    "start": "NODE_OPTIONS=--no-node-snapshot backstage-cli repo start",
     "build:backend": "yarn workspace backend build",
     "build:all": "backstage-cli repo build --all",
     "build-image": "yarn workspace backend build-image",
@@ -32,6 +32,7 @@
     "@backstage/cli": "^0.33.0",
     "@backstage/e2e-test-utils": "^0.1.1",
     "@playwright/test": "^1.32.3",
+    "@types/react-dom": "^18",
     "node-gyp": "^10.0.0",
     "prettier": "^2.3.2",
     "typescript": "~5.8.0"
@@ -50,5 +51,12 @@
       "prettier --write"
     ]
   },
-  "packageManager": "yarn@4.4.1"
+  "packageManager": "yarn@4.4.1",
+  "dependencies": {
+    "@backstage/plugin-app-backend": "^0.5.3",
+    "@types/react": "18.0.28",
+    "env-cmd": "^10.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
 }
