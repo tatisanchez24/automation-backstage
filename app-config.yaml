@@ -34,8 +34,8 @@ backend:
     connection:
       host: ${POSTGRES_HOST}
       port: ${POSTGRES_PORT}
-      user: postgres
-      password: postgres
+      user: miusuario
+      password: miclave
   # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
 
 integrations:
@@ -114,8 +114,8 @@ catalog:
     - allow: [System, Domain, Component, API, Resource, Location, Template]
   locations:
     # Local example data, file locations are relative to the backend process, typically `packages/backend`
-    # - type: file
-    #   target: ../../examples/entities.yaml
+    - type: file
+      target: ../../examples/entities.yaml
 
     # Local example template
     # - type: file
@@ -141,8 +141,8 @@ catalog:
         - allow: [User, Group]
 
     ## Uncomment these lines to add more example data
-    - type: url
-      target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
+    # - type: url
+    #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all.yaml
 
     ## Uncomment these lines to add an example org
     # - type: url
