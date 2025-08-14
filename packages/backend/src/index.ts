@@ -14,6 +14,8 @@ import {
 } from '@backstage/backend-plugin-api';
 import { createNewFileAction } from './plugins/scaffolder/actions/common/createNewFileAction';
 import { createDateAction } from './plugins/scaffolder/actions/common/getDateAction';
+import { createGetGroupProfileAction } from './plugins/scaffolder/actions/common/getGroupProfile';
+import { CatalogClient } from '@backstage/catalog-client';
 
 const backend = createBackend();
 
@@ -73,9 +75,16 @@ const scaffolderModuleCustomExtensions = createBackendModule({
       deps: {
         scaffolder: scaffolderActionsExtensionPoint,
         config: coreServices.rootConfig,
+        discovery: coreServices.discovery,
         // ... and other dependencies as needed
       },
-      async init({ scaffolder, config /* ..., other dependencies */ }) {
+      async init({
+        scaffolder,
+        config,
+        discovery /* ..., other dependencies */,
+      }) {
+        const catalogClient = new CatalogClient({ discoveryApi: discovery });
+
         // Here you have the opportunity to interact with the extension
         // point before the plugin itself gets instantiated
 
@@ -83,6 +92,8 @@ const scaffolderModuleCustomExtensions = createBackendModule({
         scaffolder.addActions(createNewFileAction());
         // Add the custom date action
         scaffolder.addActions(createDateAction());
+        // Add the get group profile action
+        scaffolder.addActions(createGetGroupProfileAction(catalogClient));
       },
     });
   },
