@@ -37,11 +37,8 @@ export const ValidatePackageName = ({
         onChange={handleChange}
         aria-describedby="packageNameHelp"
       />
-
       <FormHelperText id="packageNameHelp">
         Usa solo letras minúsculas, números y guiones (-). Máximo 63 caracteres.
-        No se permiten espacios, mayúsculas, guiones bajos, ni guiones al
-        inicio, final o consecutivos.
       </FormHelperText>
     </FormControl>
   );

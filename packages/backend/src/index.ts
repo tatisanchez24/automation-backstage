@@ -13,6 +13,7 @@ import {
   createBackendModule,
 } from '@backstage/backend-plugin-api';
 import { createNewFileAction } from './plugins/scaffolder/actions/common/createNewFileAction';
+import { createDateAction } from './plugins/scaffolder/actions/common/getDateAction';
 
 const backend = createBackend();
 
@@ -80,6 +81,8 @@ const scaffolderModuleCustomExtensions = createBackendModule({
 
         // Create a new file
         scaffolder.addActions(createNewFileAction());
+        // Add the custom date action
+        scaffolder.addActions(createDateAction());
       },
     });
   },
