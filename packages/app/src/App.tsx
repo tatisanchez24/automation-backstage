@@ -42,8 +42,11 @@ import { UnifiedThemeProvider } from '@backstage/theme';
 import { redTheme } from './theme/redTheme';
 import { blueTheme } from './theme/blueTheme';
 
-import { githubAuthApiRef } from '@backstage/core-plugin-api';
-import { ScaffolderFieldExtensions, ScaffolderLayouts } from '@backstage/plugin-scaffolder-react';
+import { githubAuthApiRef, gitlabAuthApiRef } from '@backstage/core-plugin-api';
+import {
+  ScaffolderFieldExtensions,
+  ScaffolderLayouts,
+} from '@backstage/plugin-scaffolder-react';
 import { TwoColumnLayout, ValidateKebabCaseFieldExtension } from './scaffolder';
 
 const githubProvider: SignInProviderConfig = {
@@ -51,6 +54,13 @@ const githubProvider: SignInProviderConfig = {
   title: 'GitHub',
   message: 'Sign in using GitHub',
   apiRef: githubAuthApiRef,
+};
+
+const gitlabProvider: SignInProviderConfig = {
+  id: 'gitlab-auth-provider',
+  title: 'GitLab',
+  message: 'Sign in using GitLab',
+  apiRef: gitlabAuthApiRef,
 };
 
 const app = createApp({
@@ -74,7 +84,24 @@ const app = createApp({
   },
   components: {
     SignInPage: props => (
-      <SignInPage {...props} auto provider={githubProvider} />
+      <SignInPage
+        {...props}
+        providers={[
+          'guest',
+          {
+            id: 'github-auth-provider',
+            title: 'GitHub',
+            message: 'Sign in using GitHub',
+            apiRef: githubAuthApiRef,
+          },
+          {
+            id: 'gitlab-auth-provider',
+            title: 'GitLab',
+            message: 'Sign in using GitLab',
+            apiRef: gitlabAuthApiRef,
+          }
+        ]}
+      />
     ),
   },
   themes: [
@@ -118,7 +145,7 @@ const routes = (
         <ReportIssue />
       </TechDocsAddons>
     </Route>
-    <Route path="/create" element={<ScaffolderPage />} >
+    <Route path="/create" element={<ScaffolderPage />}>
       <ScaffolderFieldExtensions>
         <ValidateKebabCaseFieldExtension />
       </ScaffolderFieldExtensions>

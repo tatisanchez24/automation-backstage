@@ -13,7 +13,12 @@ import {
   createBackendModule,
 } from '@backstage/backend-plugin-api';
 import { CatalogClient } from '@backstage/catalog-client';
-import { createDateAction, createGetGroupProfileAction, createNewFileAction, extractToolNameAction } from './plugins/scaffolder/actions/common';
+import {
+  createDateAction,
+  createGetGroupProfileAction,
+  createNewFileAction,
+  extractToolNameAction,
+} from './plugins/scaffolder/actions/common';
 
 const backend = createBackend();
 
@@ -30,6 +35,9 @@ backend.add(import('@backstage/plugin-auth-backend'));
 // See https://backstage.io/docs/auth/guest/provider
 // For github login
 backend.add(import('@backstage/plugin-auth-backend-module-github-provider'));
+// For gitlab login
+backend.add(import('@backstage/plugin-auth-backend-module-gitlab-provider'));
+// Add gitlab auth provider module
 
 // catalog plugin
 backend.add(import('@backstage/plugin-catalog-backend'));
