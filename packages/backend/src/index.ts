@@ -12,10 +12,8 @@ import {
   coreServices,
   createBackendModule,
 } from '@backstage/backend-plugin-api';
-import { createNewFileAction } from './plugins/scaffolder/actions/common/createNewFileAction';
-import { createDateAction } from './plugins/scaffolder/actions/common/getDateAction';
-import { createGetGroupProfileAction } from './plugins/scaffolder/actions/common/getGroupProfile';
 import { CatalogClient } from '@backstage/catalog-client';
+import { createDateAction, createGetGroupProfileAction, createNewFileAction, extractToolNameAction } from './plugins/scaffolder/actions/common';
 
 const backend = createBackend();
 
@@ -94,6 +92,8 @@ const scaffolderModuleCustomExtensions = createBackendModule({
         scaffolder.addActions(createDateAction());
         // Add the get group profile action
         scaffolder.addActions(createGetGroupProfileAction(catalogClient));
+        // Add the extract tool name action
+        scaffolder.addActions(extractToolNameAction());
       },
     });
   },
