@@ -1,6 +1,7 @@
 import { createTemplateAction } from '@backstage/plugin-scaffolder-node';
 import { CatalogApi } from '@backstage/catalog-client';
 
+
 export const createGetGroupProfileAction = (catalogClient: CatalogApi) => {
   return createTemplateAction({
     id: 'custom:get-group-profile',
@@ -17,7 +18,10 @@ export const createGetGroupProfileAction = (catalogClient: CatalogApi) => {
     async handler(ctx) {
       const { groupRef } = ctx.input;
 
-      const entity = await catalogClient.getEntityByRef(groupRef);
+      const entity = await catalogClient.getEntityByRef(groupRef, {
+        token: ctx.secrets?.backstageToken
+      });
+      
       if (!entity) {
         throw new Error(`No se encontró el grupo con referencia ${groupRef}`);
       }
