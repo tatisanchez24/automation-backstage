@@ -42,19 +42,14 @@ import { UnifiedThemeProvider } from '@backstage/theme';
 import { redTheme } from './theme/redTheme';
 import { blueTheme } from './theme/blueTheme';
 
-import { githubAuthApiRef, gitlabAuthApiRef } from '@backstage/core-plugin-api';
+import { gitlabAuthApiRef } from '@backstage/core-plugin-api';
 import {
   ScaffolderFieldExtensions,
   ScaffolderLayouts,
 } from '@backstage/plugin-scaffolder-react';
 import { TwoColumnLayout, ValidateKebabCaseFieldExtension } from './scaffolder';
-
-const githubProvider: SignInProviderConfig = {
-  id: 'github-auth-provider',
-  title: 'GitHub',
-  message: 'Sign in using GitHub',
-  apiRef: githubAuthApiRef,
-};
+import { ResourcesCatalogPage } from './components/catalog/ResourcesCatalogPage';
+import { SystemsCatalogPage } from './components/catalog/SystemsCatalogPage';
 
 const gitlabProvider: SignInProviderConfig = {
   id: 'gitlab-auth-provider',
@@ -89,17 +84,11 @@ const app = createApp({
         providers={[
           'guest',
           {
-            id: 'github-auth-provider',
-            title: 'GitHub',
-            message: 'Sign in using GitHub',
-            apiRef: githubAuthApiRef,
-          },
-          {
             id: 'gitlab-auth-provider',
             title: 'GitLab',
             message: 'Sign in using GitLab',
             apiRef: gitlabAuthApiRef,
-          }
+          },
         ]}
       />
     ),
@@ -129,13 +118,26 @@ const app = createApp({
 const routes = (
   <FlatRoutes>
     <Route path="/" element={<Navigate to="catalog" />} />
-    <Route path="/catalog" element={<CatalogIndexPage />} />
+    <Route
+      path="/catalog"
+      element={
+        <CatalogIndexPage
+          initialKind="Component"
+          ownerPickerMode="all"
+          initiallySelectedFilter="all"
+        />
+      }
+    />
     <Route
       path="/catalog/:namespace/:kind/:name"
       element={<CatalogEntityPage />}
     >
       {entityPage}
     </Route>
+
+    <Route path="/resources" element={<ResourcesCatalogPage />} />
+    <Route path="/systems" element={<SystemsCatalogPage />} />
+
     <Route path="/docs" element={<TechDocsIndexPage />} />
     <Route
       path="/docs/:namespace/:kind/:name/*"
@@ -154,6 +156,7 @@ const routes = (
       </ScaffolderLayouts>
     </Route>
     <Route path="/api-docs" element={<ApiExplorerPage />} />
+
     <Route
       path="/catalog-import"
       element={

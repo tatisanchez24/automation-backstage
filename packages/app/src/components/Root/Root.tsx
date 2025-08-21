@@ -22,6 +22,8 @@ import {
   SidebarSpace,
   useSidebarOpenState,
   Link,
+  DashboardIcon,
+  
 } from '@backstage/core-components';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
@@ -68,13 +70,15 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
         {/* Global nav, not org-specific */}
         <SidebarItem icon={HomeIcon} to="catalog" text="Home" />
         <MyGroupsSidebarItem
-          singularTitle="My Group"
-          pluralTitle="My Groups"
+          singularTitle="Mi Grupo"
+          pluralTitle="Mis Grupos"
           icon={GroupIcon}
         />
-        <SidebarItem icon={ExtensionIcon} to="api-docs" text="APIs" />
+        {/* <SidebarItem icon={ExtensionIcon} to="api-docs" text="APIs" /> */}
+        <SidebarItem icon={DashboardIcon} to="resources" text="Paquetes" />
+        <SidebarItem icon={ExtensionIcon} to="systems" text="Herramientas" />
         <SidebarItem icon={LibraryBooks} to="docs" text="Docs" />
-        <SidebarItem icon={CreateComponentIcon} to="create" text="Create..." />
+        <SidebarItem icon={CreateComponentIcon} to="create" text="Crear..." />
         {/* End global nav */}
         <SidebarDivider />
         <SidebarScrollWrapper>
@@ -84,11 +88,11 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
       <SidebarSpace />
       <SidebarDivider />
       <SidebarGroup
-        label="Settings"
+        label="Configuracion"
         icon={<UserSettingsSignInAvatar />}
         to="/settings"
       >
-        <SidebarSettings />
+        <SidebarSettings  />
       </SidebarGroup>
     </Sidebar>
     {children}

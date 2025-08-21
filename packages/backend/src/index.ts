@@ -19,9 +19,12 @@ import {
   createNewFileAction,
   extractToolNameAction,
 } from './plugins/scaffolder/actions/common';
+import { createPublishGitlabAction } from '@backstage/plugin-scaffolder-backend-module-gitlab';
+import { ScmIntegrations } from '@backstage/integration';
+
 
 const backend = createBackend();
-
+;
 backend.add(import('@backstage/plugin-app-backend'));
 backend.add(import('@backstage/plugin-proxy-backend'));
 backend.add(import('@backstage/plugin-scaffolder-backend'));
@@ -71,6 +74,10 @@ backend.add(import('@backstage/plugin-kubernetes-backend'));
 
 // github dicovery
 backend.add(import('@backstage/plugin-catalog-backend-module-github'));
+// gitlab discovery
+backend.add(import('@backstage/plugin-catalog-backend-module-gitlab'));
+
+backend.add(import('@backstage/plugin-scaffolder-backend-module-gitlab'));
 
 // Register custom actions
 const scaffolderModuleCustomExtensions = createBackendModule({
